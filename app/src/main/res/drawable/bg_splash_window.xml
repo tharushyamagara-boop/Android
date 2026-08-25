@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Solid black background -->
+    <item android:drawable="@android:color/black" />
+    <!-- Centered splash_combined (logo + brand name) -->
+    <item android:gravity="center">
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/splash_combined" />
+    </item>
+</layer-list>

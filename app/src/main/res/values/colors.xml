@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#F06D1A</color>
+    <color name="backgroundColor">#000000</color>
+    <color name="shortcut_background">#000000</color>
+
+    <!-- Navigation Bar & System Bar Colors (Always Black) -->
+    <color name="navigationColor">#000000</color>
+    <color name="navigationColorDark">#000000</color>
+    <color name="navigationDividerColor">#000000</color>
+    <color name="navigationDividerColorDark">#000000</color>
+
+    <!-- Splash Palette -->
+    <color name="brand_orange">#F06D1A</color>
+    <color name="brand_orange_light">#FF8B3D</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#8E8E93</color>
+    <color name="text_muted">#55555C</color>
+</resources>

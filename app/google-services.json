@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "319965369809",
+    "project_id": "studio-679521694-21846",
+    "storage_bucket": "studio-679521694-21846.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:319965369809:android:590c56343b67fc0760fcf0",
+        "android_client_info": {
+          "package_name": "com.loprok.twa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "319965369809-jl1379pkt2heartkt421r7puhr6t97ef.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCe2hHp3lcragJF9kK1EnZ9hOn4ScAkYZE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "319965369809-jl1379pkt2heartkt421r7puhr6t97ef.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "319965369809-n911tp2mdaedbk8vt5m6pjdqvpeao0rt",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.loprok.social"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

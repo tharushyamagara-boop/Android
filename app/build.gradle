@@ -1,0 +1,172 @@
+/*
+ * Copyright 2019 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import groovy.xml.MarkupBuilder
+
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+}
+
+// FORCE REDIRECT: Moves all build files to a safe local folder outside OneDrive.
+layout.buildDirectory.set(file("C:/tmp/android-builds/LopRok/app"))
+
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('local.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+def twaManifest = [
+    applicationId: 'com.loprok.twa',
+    hostName: 'loprok.com',
+    launchUrl: '/home',
+    name: 'LopRok',
+    launcherName: 'LopRok',
+    themeColor: '#000000', 
+    themeColorDark: '#000000',
+    navigationColor: '#000000',
+    navigationColorDark: '#000000',
+    navigationDividerColor: '#000000',
+    navigationDividerColorDark: '#000000',
+    backgroundColor: '#000000',
+    enableNotifications: true,
+    shortcuts: [[name:'Home', short_name:'Home', url:'https://loprok.com/home', icon:'shortcut_0'],[name:'Create', short_name:'Create', url:'https://loprok.com/create', icon:'shortcut_1']],
+    generatorApp: 'PWABuilder',
+    fallbackType: 'customtabs',
+    enableSiteSettingsShortcut: 'true',
+    orientation: 'default',
+]
+
+android {
+    compileSdkVersion 36
+    namespace "com.loprok.twa"
+    
+    compileOptions {
+        // Fix Java 8 deprecation and resolve compiler warnings
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    defaultConfig {
+        applicationId "com.loprok.twa"
+        minSdkVersion 23
+        targetSdkVersion 36
+        versionCode 27
+        versionName "2.0.0.2"
+
+        resValue "string", "appName", twaManifest.name
+        resValue "string", "launcherName", twaManifest.launcherName
+        def launchUrl = "https://" + twaManifest.hostName + twaManifest.launchUrl
+        resValue "string", "launchUrl", launchUrl
+        resValue "string", "webManifestUrl", 'https://loprok.com/manifest.json'
+        resValue "string", "fullScopeUrl", 'https://loprok.com/'
+        resValue "string", "shareTarget", '{\\"action\\":\\"/share\\",\\"method\\":\\"POST\\",\\"enctype\\":\\"multipart/form-data\\",\\"params\\":{\\"title\\":\\"title\\",\\"text\\":\\"text\\",\\"url\\":\\"url\\",\\"files\\":[{\\"name\\":\\"media\\",\\"accept\\":[\\"image/*\\",\\"video/*\\"]}]}}'
+        resValue "string", "hostName", twaManifest.hostName
+        resValue "color", "colorPrimary", twaManifest.themeColor
+        resValue "color", "colorPrimaryDark", twaManifest.themeColorDark
+        resValue "color", "navigationColor", twaManifest.navigationColor
+        resValue "color", "navigationColorDark", twaManifest.navigationColorDark
+        resValue "color", "navigationDividerColor", twaManifest.navigationDividerColor
+        resValue "color", "navigationDividerColorDark", twaManifest.navigationDividerColorDark
+        resValue "color", "backgroundColor", twaManifest.backgroundColor
+        resValue "string", "providerAuthority", twaManifest.applicationId + '.fileprovider'
+        resValue "bool", "enableNotification", twaManifest.enableNotifications.toString()
+
+        twaManifest.shortcuts.eachWithIndex { shortcut, index ->
+            resValue "string", "shortcut_name_$index", "$shortcut.name"
+            resValue "string", "shortcut_short_name_$index", "$shortcut.short_name"
+        }
+
+        resValue "string", "generatorApp", twaManifest.generatorApp
+        resValue "string", "fallbackType", twaManifest.fallbackType
+        resValue "bool", "enableSiteSettingsShortcut", twaManifest.enableSiteSettingsShortcut
+        resValue "string", "orientation", twaManifest.orientation
+    }
+    signingConfigs {
+        release {
+            storeFile file("../signingKey.keystore")
+            storePassword keystoreProperties['release.storePassword']
+            keyAlias keystoreProperties['release.keyAlias']
+            keyPassword keystoreProperties['release.keyPassword']
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
+            signingConfig signingConfigs.release
+        }
+        debug {
+            signingConfig signingConfigs.release
+        }
+    }
+    lint {
+        checkReleaseBuilds false
+    }
+}
+
+// Updated to tasks.register to fix deprecation warning
+tasks.register('generateShorcutsFile') {
+    doLast {
+        assert twaManifest.shortcuts.size() < 5, "You can have at most 4 shortcuts."
+        twaManifest.shortcuts.eachWithIndex { s, i ->
+            assert s.name != null, 'Missing `name` in shortcut #' + i
+            assert s.short_name != null, 'Missing `short_name` in shortcut #' + i
+            assert s.url != null, 'Missing `icon` in shortcut #' + i
+            assert s.icon != null, 'Missing `url` in shortcut #' + i
+        }
+        def shortcutsFile = new File("$projectDir/src/main/res/xml", "shortcuts.xml")
+        def xmlWriter = new StringWriter()
+        def xmlMarkup = new MarkupBuilder(new IndentPrinter(xmlWriter, "    ", true))
+        xmlMarkup
+            .'shortcuts'('xmlns:android': 'http://schemas.android.com/apk/res/android') {
+                twaManifest.shortcuts.eachWithIndex { s, i ->
+                    'shortcut'(
+                            'android:shortcutId': 'shortcut' + i,
+                            'android:enabled': 'true',
+                            'android:icon': '@drawable/' + s.icon,
+                            'android:shortcutShortLabel': '@string/shortcut_short_name_' + i,
+                            'android:shortcutLongLabel': '@string/shortcut_name_' + i) {
+                        'intent'(
+                                'android:action': 'android.intent.action.MAIN',
+                                'android:targetPackage': twaManifest.applicationId,
+                                'android:targetClass': twaManifest.applicationId + '.LauncherActivity',
+                                'android:data': s.url)
+                        'categories'('android:name': 'android.intent.category.LAUNCHER')
+                    }
+                }
+            }
+        shortcutsFile.text = xmlWriter.toString() + '\n'
+    }
+}
+
+preBuild.dependsOn(generateShorcutsFile)
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.google.androidbrowserhelper:androidbrowserhelper:2.7.3'
+    implementation 'androidx.core:core-splashscreen:1.2.0'
+    implementation 'androidx.activity:activity:1.13.0'
+    implementation 'androidx.appcompat:appcompat:1.7.1'
+    implementation 'com.google.android.material:material:1.14.0'
+    implementation 'androidx.browser:browser:1.10.0'
+    implementation platform('com.google.firebase:firebase-bom:33.9.0')
+    implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.firebase:firebase-analytics'
+}

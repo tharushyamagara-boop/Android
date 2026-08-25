@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!--
+        ══════════════════════════════════════════════════════════════════
+        TWA RUNTIME THEME
+        Applied once Chrome has rendered. Completely black so there is
+        never a white background visible behind the WebView.
+        windowIsTranslucent = false prevents see-through to any surface
+        behind the activity window (root cause of white flashes).
+        ══════════════════════════════════════════════════════════════════
+    -->
+    <style name="Theme.LopRok.TWA" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:colorBackground">#000000</item>
+        <item name="android:colorPrimary">#000000</item>
+        <item name="android:colorPrimaryDark">#000000</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+        <item name="android:itemBackground">#000000</item>
+        <item name="android:actionMenuTextColor">#FFFFFF</item>
+        <item name="android:popupMenuStyle">@style/BlackPopupMenu</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">#000000</item>
+        <item name="android:navigationBarColor">#000000</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+
+    <!--
+        ══════════════════════════════════════════════════════════════════
+        SYSTEM STARTING / SPLASH THEME  (pre-API 31 path)
+        On API < 31 the SplashScreen compat lib falls back to a plain
+        windowBackground. bg_splash_window (black + centered logo +
+        "LopRok" text) shows from frame 0.
+        On API 31+ this theme is overridden by values-v31/styles.xml.
+        postSplashScreenTheme -> Theme.LopRok.Splash (opaque black bridge).
+        ══════════════════════════════════════════════════════════════════
+    -->
+    <style name="Theme.LopRok.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#000000</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_branded</item>
+        <item name="windowSplashScreenIconBackgroundColor">#000000</item>
+        <item name="windowSplashScreenAnimationDuration">0</item>
+        <!-- Branded windowBackground shown on API < 31 -->
+        <item name="android:windowBackground">@drawable/bg_splash_window</item>
+        <item name="android:colorBackground">#000000</item>
+        <item name="android:statusBarColor">#000000</item>
+        <item name="android:navigationBarColor">#000000</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="postSplashScreenTheme">@style/Theme.LopRok.Splash</item>
+    </style>
+
+    <!--
+        ══════════════════════════════════════════════════════════════════
+        POST-SPLASH BRIDGE THEME
+        Applied immediately after the system splash exits and before
+        Chrome renders its first frame. Must be fully opaque black so the
+        window background can never appear white.
+        ══════════════════════════════════════════════════════════════════
+    -->
+    <style name="Theme.LopRok.Splash" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:colorBackground">#000000</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">#000000</item>
+        <item name="android:navigationBarColor">#000000</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+
+    <!-- Black popup menus -->
+    <style name="BlackPopupMenu" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">#000000</item>
+        <item name="android:background">#000000</item>
+        <item name="android:itemBackground">#000000</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+</resources>

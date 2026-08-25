@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Zero-duration fade for window transitions (API 31+) -->
+    <style name="FadeWindowAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/splash_fade_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/splash_fade_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/splash_fade_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/splash_fade_out</item>
+        <item name="android:taskOpenEnterAnimation">@anim/splash_fade_in</item>
+        <item name="android:taskOpenExitAnimation">@anim/splash_fade_out</item>
+        <item name="android:taskToFrontEnterAnimation">@anim/splash_fade_in</item>
+        <item name="android:taskToFrontExitAnimation">@anim/splash_fade_out</item>
+    </style>
+
+    <!--
+        ══════════════════════════════════════════════════════════════════
+        TWA RUNTIME THEME  (API 31+ override)
+        windowIsTranslucent = false is CRITICAL — translucent windows
+        on API 31+ let the system surface show through, which is white.
+        ══════════════════════════════════════════════════════════════════
+    -->
+    <style name="Theme.LopRok.TWA" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:colorBackground">@android:color/black</item>
+        <item name="android:colorPrimary">#000000</item>
+        <item name="android:colorPrimaryDark">#000000</item>
+        <!-- MUST be false — translucent = white flash on API 31+ -->
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:forceDarkAllowed">false</item>
+        <item name="android:itemBackground">#000000</item>
+        <item name="android:actionMenuTextColor">#FFFFFF</item>
+        <item name="android:popupMenuStyle">@style/BlackPopupMenu</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">#000000</item>
+        <item name="android:navigationBarColor">#000000</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:enforceNavigationBarContrast">false</item>
+        <item name="android:enforceStatusBarContrast">false</item>
+        <!-- Suppress system splash overlay in the TWA runtime phase -->
+        <item name="android:windowSplashScreenBackground">@android:color/black</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_splash_empty</item>
+        <item name="android:windowSplashScreenAnimationDuration">0</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@android:color/transparent</item>
+    </style>
+
+    <!--
+        ══════════════════════════════════════════════════════════════════
+        SYSTEM STARTING / SPLASH THEME  (API 31+ path)
+
+        On API 31+ the SplashScreen API renders its OWN full-screen view
+        using ONLY the windowSplashScreen* attributes. android:windowBackground
+        is completely ignored during the splash phase on API 31+.
+
+        Therefore:
+          • windowSplashScreenBackground = black
+          • windowSplashScreenAnimatedIcon = ic_splash_branded (logo icon
+            centred in the standard 240dp circle on a black background)
+          • postSplashScreenTheme → Theme.LopRok.Splash  (opaque bridge)
+
+        The "logo on left + LopRok on right" full-width branding is then
+        shown by Chrome's TWA splash (SPLASH_IMAGE_DRAWABLE in the manifest)
+        while the web content loads — the second and longer phase.
+        ══════════════════════════════════════════════════════════════════
+    -->
+    <style name="Theme.LopRok.Starting" parent="Theme.SplashScreen">
+        <!-- Solid black — matches the app background so there's no colour pop -->
+        <item name="windowSplashScreenBackground">@android:color/black</item>
+        <!-- LopRok logo centred in the system splash circle -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_branded</item>
+        <item name="windowSplashScreenIconBackgroundColor">@android:color/black</item>
+        <!-- 0 ms — dismiss immediately once condition is cleared -->
+        <item name="windowSplashScreenAnimationDuration">0</item>
+        <!-- Bridge to opaque black before Chrome draws anything -->
+        <item name="postSplashScreenTheme">@style/Theme.LopRok.Splash</item>
+        <!-- System bars locked to black from frame 0 -->
+        <item name="android:statusBarColor">#000000</item>
+        <item name="android:navigationBarColor">#000000</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:enforceNavigationBarContrast">false</item>
+        <item name="android:enforceStatusBarContrast">false</item>
+    </style>
+
+    <!--
+        ══════════════════════════════════════════════════════════════════
+        POST-SPLASH BRIDGE THEME  (API 31+ override)
+        Applied the instant the SplashScreen exits. Must be opaque black
+        so the window surface never shows white between splash and Chrome.
+        ══════════════════════════════════════════════════════════════════
+    -->
+    <style name="Theme.LopRok.Splash" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:colorBackground">#000000</item>
+        <item name="android:colorPrimary">#000000</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:forceDarkAllowed">false</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">#000000</item>
+        <item name="android:navigationBarColor">#000000</item>
+        <item name="android:navigationBarDividerColor">#000000</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:enforceNavigationBarContrast">false</item>
+        <item name="android:enforceStatusBarContrast">false</item>
+        <!-- Also suppress any residual system splash overlay -->
+        <item name="android:windowSplashScreenBackground">@android:color/black</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_splash_empty</item>
+        <item name="android:windowSplashScreenAnimationDuration">0</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@android:color/transparent</item>
+    </style>
+
+</resources>

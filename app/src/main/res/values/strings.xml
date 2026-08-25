@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App -->
+    <string name="appName">LopRok</string>
+    <string name="launcherName">LopRok</string>
+    <string name="app_name">LopRok</string>
+
+    <!-- TWA -->
+    <string name="launchUrl">https://loprok.com/home</string>
+    <string name="default_url">https://loprok.com/home</string>
+    <string name="fullScopeUrl">https://loprok.com/</string>
+    <string name="webManifestUrl">https://loprok.com/manifest.json</string>
+    <string name="hostName">loprok.com</string>
+
+    <!-- Digital Asset Links -->
+    <string name="assetStatements">
+        [{
+            \"relation\": [
+                \"delegate_permission/common.handle_all_urls\",
+                \"delegate_permission/common.query_web_notifications\",
+                \"delegate_permission/common.display_web_notifications\"
+            ],
+            \"target\": {
+                \"namespace\": \"web\",
+                \"site\": \"https://loprok.com\"
+            }
+        }]
+    </string>
+
+    <!-- TWA generator -->
+    <string name="generatorApp">bubblewrap</string>
+
+    <!-- FileProvider -->
+    <string name="providerAuthority">com.loprok.twa.fileprovider</string>
+
+    <!-- TWA fallback -->
+    <string name="fallbackType">customtabs</string>
+
+    <!-- Orientation -->
+    <string name="orientation">default</string>
+
+    <!-- Splash Screen -->
+    <string name="splash_tagline">THE CREATOR PLATFORM</string>
+    <string name="splash_from">from</string>
+    <string name="splash_company">LOPROK</string>
+
+</resources>

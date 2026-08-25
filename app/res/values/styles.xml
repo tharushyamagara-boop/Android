@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- TWA theme.
+         Keep the window opaque to prevent an underlying/transition window
+         from appearing during the handoff to the Trusted Web Activity. -->
+    <style name="Theme.LopRok.TWA" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+
+        <!-- Prevent Android from force-inverting the application's colors. -->
+        <item name="android:forceDarkAllowed">false</item>
+    </style>
+
+</resources>

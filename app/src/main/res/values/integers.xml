@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="twa_color_scheme_dark">2</integer>
+    <integer name="twa_dark_strategy">1</integer>
+    <integer name="twa_splash_fade_duration">0</integer>
+</resources>
