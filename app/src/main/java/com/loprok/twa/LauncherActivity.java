@@ -72,6 +72,22 @@ public class LauncherActivity
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (mTwaLaunched) {
+            finish();
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        mTwaLaunched = false;
+        launchTwa();
+    }
+
+    @Override
     protected void launchTwa() {
         if (mTwaLaunched) {
             return;
@@ -81,6 +97,9 @@ public class LauncherActivity
         String provider = getPreferredProvider();
         Log.d(TAG, "LopRok TWA launching with provider: " + (provider != null ? provider : "default"));
 
+        if (mTwaLauncher != null) {
+            mTwaLauncher.destroy();
+        }
         mTwaLauncher = new TwaLauncher(this, provider);
 
         CustomTabColorSchemeParams colorSchemeParams = new CustomTabColorSchemeParams.Builder()

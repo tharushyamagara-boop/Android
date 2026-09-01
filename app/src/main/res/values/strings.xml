@@ -37,6 +37,29 @@
     <!-- TWA fallback -->
     <string name="fallbackType">customtabs</string>
 
+    <!-- Share Target -->
+    <string name="shareTarget">
+        {
+            \"action\": \"https://loprok.com/share\",
+            \"method\": \"POST\",
+            \"enctype\": \"multipart/form-data\",
+            \"params\": {
+                \"title\": \"title\",
+                \"text\": \"text\",
+                \"url\": \"url\",
+                \"files\": [
+                    {
+                        \"name\": \"media\",
+                        \"accept\": [
+                            \"image/*\",
+                            \"video/*\"
+                        ]
+                    }
+                ]
+            }
+        }
+    </string>
+
     <!-- Orientation -->
     <string name="orientation">default</string>
 
