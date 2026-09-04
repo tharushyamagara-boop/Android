@@ -65,8 +65,8 @@ android {
         applicationId "com.loprok.twa"
         minSdkVersion 23
         targetSdkVersion 36
-        versionCode 37
-        versionName "2.0.1.2"
+        versionCode 40
+        versionName "2.0.2.4"
 
         resValue "string", "appName", twaManifest.name
         resValue "string", "launcherName", twaManifest.launcherName

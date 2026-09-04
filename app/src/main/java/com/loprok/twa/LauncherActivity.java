@@ -135,6 +135,12 @@ public class LauncherActivity
                 () -> Log.d(TAG, "TWA launch completed"),
                 getFallbackStrategy()
         );
+
+        if (Build.VERSION.SDK_INT >= 34) {
+            overrideActivityTransition(OVERRIDE_TRANSITION_OPEN, 0, 0);
+        } else {
+            overridePendingTransition(0, 0);
+        }
     }
 
     private void addShareDataIfPresent(TrustedWebActivityIntentBuilder builder) {

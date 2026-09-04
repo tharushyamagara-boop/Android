@@ -121,6 +121,7 @@
         <activity
             android:name=".LauncherActivity"
             android:launchMode="singleTask"
+            android:alwaysRetainTaskState="true"
             android:label="@string/launcherName"
             android:exported="true"
             android:theme="@style/Theme.LopRok.Starting"
@@ -254,6 +255,15 @@
                 <data
                     android:scheme="https"
                     android:host="loprok.com" />
+            </intent-filter>
+
+            <!-- Custom and non-verified web scheme deep links -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
                     android:scheme="https"
                     android:host="www.loprok.com" />
